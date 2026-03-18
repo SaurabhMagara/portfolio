@@ -159,3 +159,9 @@ body {
     --angle: 360deg;
   }
 }
+
+@keyframes spin-blackhole {
+  to {
+    transform: rotate(360deg);
+  }
+}
