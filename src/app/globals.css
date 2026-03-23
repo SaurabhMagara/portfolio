@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+:root {
+  --void-black: #000000;
+  --dark-space: #050505;
+  --nebula-purple: #1a1a1a;
+  --nebula-blue: #222222;
+  --star-blue: #eaeaea;
+  --star-yellow: #a0a0a0;
+  --star-white: #ffffff;
+  --accent-cyan: #d4d4d4;
+  --text-primary: #e0e0e0;
+  --text-secondary: #888888;
+  
+  --glass-bg: rgba(10, 10, 10, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+}
+
+@theme inline {
+  --color-background: var(--void-black);
+  --color-foreground: var(--text-primary);
+  
+  --color-void-black: var(--void-black);
+  --color-dark-space: var(--dark-space);
+  --color-nebula-purple: var(--nebula-purple);
+  --color-nebula-blue: var(--nebula-blue);
+  --color-star-blue: var(--star-blue);
+  --color-star-yellow: var(--star-yellow);
+  --color-star-white: var(--star-white);
+  --color-accent-cyan: var(--accent-cyan);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+}
+
+body {
+  background-color: var(--void-black);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Base custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--void-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--nebula-purple);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* Custom Selection */
+::selection {
+  background: rgba(0, 240, 255, 0.3);
+  color: var(--star-white);
+}
+
+/* Glassmorphism Card Style */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: var(--glass-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+@media (min-width: 768px) {
+  .glass-card {
+    padding: 2.5rem;
+  }
+}
+
+.glass-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 240, 255, 0.3);
+  box-shadow: 0 10px 40px 0 rgba(0, 240, 255, 0.1);
+}
+
+/* Glow effects */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
+}
+
+.box-glow {
+  box-shadow: 0 0 15px rgba(77, 28, 154, 0.5);
+}
+
+.box-glow:hover {
+  box-shadow: 0 0 25px rgba(77, 28, 154, 0.8), 0 0 15px rgba(0, 240, 255, 0.5);
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(90deg, var(--accent-cyan), var(--star-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Blackhole animated ring */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.blackhole-ring {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: var(--void-black);
+  z-index: 1;
+}
+
+.blackhole-ring::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--angle),
+    transparent 0%,
+    transparent 40%,
+    rgba(100, 200, 255, 0.4) 45%,
+    rgba(150, 200, 255, 1) 50%,
+    rgba(100, 200, 255, 0.4) 55%,
+    transparent 60%,
+    transparent 100%
+  );
+  animation: spin-blackhole-border 3s linear infinite;
+  z-index: -2;
+}
+
+.blackhole-ring::after {
+  content: "";
+  position: absolute;
+  inset: 1px; /* Inner black area */
+  border-radius: inherit;
+  background: var(--void-black);
+  z-index: -1;
+}
+
+@keyframes spin-blackhole-border {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+
+@keyframes spin-blackhole {
+  to {
+    transform: rotate(360deg);
+  }
+}
