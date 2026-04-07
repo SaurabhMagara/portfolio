@@ -2,6 +2,9 @@
 
 import { motion } from "framer-motion";
 import Typewriter from "./Typewriter";
+import dynamic from "next/dynamic";
+
+const MarsPlanet = dynamic(() => import("./MarsPlanet"), { ssr: false });
 
 export default function HeroSection() {
   return (
@@ -40,23 +43,10 @@ export default function HeroSection() {
         transition={{ duration: 1, delay: 0.2 }}
         className="md:w-2/5 flex justify-center"
       >
-        <div className="relative w-64 h-64 md:w-80 md:h-80">
-          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_30%,var(--star-blue),var(--nebula-purple)_60%,var(--void-black)_100%)] shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.8),0_0_40px_rgba(0,240,255,0.3)] animate-[float_6s_ease-in-out_infinite,rotate_30s_linear_infinite] overflow-hidden">
-            {/* Crater-like textures */}
-            <div className="absolute w-full h-full bg-[repeating-linear-gradient(45deg,transparent,transparent_10px,rgba(255,255,255,0.05)_10px,rgba(255,255,255,0.05)_20px)] opacity-30"></div>
-          </div>
+        <div className="relative w-64 h-64 md:w-96 md:h-96">
+          <MarsPlanet />
         </div>
       </motion.div>
-      <style>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
-        }
-        @keyframes rotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `}</style>
     </section>
   );
 }

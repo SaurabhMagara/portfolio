@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "./SectionHeading";
 
 const experiences = [
@@ -39,21 +40,40 @@ const experiences = [
 ];
 
 export default function ExperienceSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end end"]
+  });
+
+  const lineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
   return (
     <section id="experience" className="min-h-screen pt-24 px-6 max-w-4xl mx-auto flex flex-col justify-center relative z-10">
       <SectionHeading title="Experience Timeline" />
 
-      <div className="relative border-l-2 border-accent-cyan/50 ml-4 md:ml-0 md:pl-8 space-y-12">
-        {/* Glowing timeline line overlay */}
-        <div className="absolute top-0 -left-[2px] w-[2px] h-full bg-gradient-to-b from-accent-cyan via-nebula-purple to-transparent opacity-80 shadow-[0_0_10px_var(--accent-cyan)] md:-left-px"></div>
+      <div ref={containerRef} className="relative border-l-2 border-accent-cyan/20 ml-4 md:ml-0 md:pl-8 space-y-12">
+        {/* Background line track */}
+        <div className="absolute top-0 -left-[2px] w-[2px] h-full bg-white/5 md:-left-px"></div>
+        {/* Animated glowing fill line */}
+        <motion.div 
+          style={{ height: lineHeight }}
+          className="absolute top-0 -left-[2px] w-[2px] bg-gradient-to-b from-accent-cyan via-nebula-purple to-transparent shadow-[0_0_15px_var(--accent-cyan)] md:-left-px origin-top"
+        ></motion.div>
 
         {experiences.map((exp, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, x: -40, scale: 0.95 }}
+            whileInView={{ opacity: 1, x: 0, scale: 1 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
+            transition={{ 
+              duration: 0.6, 
+              delay: index * 0.1,
+              type: "spring",
+              stiffness: 100,
+              damping: 12
+            }}
             className="relative glass-card ml-6 md:ml-0 p-8 rounded-3xl bg-white/5 backdrop-blur-md border border-white/10 hover:border-accent-cyan/50 hover:-translate-y-1 transition-all duration-300"
           >
             {/* Timeline Dot */}
