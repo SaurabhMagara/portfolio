@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Typewriter from "./Typewriter";
 import dynamic from "next/dynamic";
 
-const MarsPlanet = dynamic(() => import("./MarsPlanet"), { ssr: false });
+const EarthPlanet = dynamic(() => import("./EarthPlanet"), { ssr: false });
 
 export default function HeroSection() {
   return (
@@ -44,7 +44,7 @@ export default function HeroSection() {
         className="md:w-2/5 flex justify-center"
       >
         <div className="relative w-64 h-64 md:w-96 md:h-96">
-          <MarsPlanet />
+          <EarthPlanet />
         </div>
       </motion.div>
     </section>
