@@ -6,9 +6,18 @@ import SectionHeading from "./SectionHeading";
 
 const experiences = [
   {
+    role: "Assistant System Engineer",
+    company: "Tata Consultancy Services",
+    date: "Aug 2026 - Present",
+    details: [
+      "Working in Digital Procurement",
+      "Ivalua Platform"
+    ],
+  },
+  {
     role: "Software Developer",
     company: "Rayo Innovations",
-    date: "Nov 2025 - Present",
+    date: "Nov 2025 - May 2026",
     details: [
       "Worked on CMS and CRM systems",
       "Built client-side modules and implemented them",

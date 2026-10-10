@@ -15,7 +15,14 @@
 /coverage
 
 # next.js
+/.next
 /out/
+/out/.next
+/out/.next/dev
+/out/.next/static
+/out/.next/static/chunks
+/out/.next/static/media
+/out/.next/static/css
 
 # production
 /build

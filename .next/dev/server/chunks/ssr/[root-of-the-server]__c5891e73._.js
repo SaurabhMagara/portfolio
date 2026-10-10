@@ -132,37 +132,97 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$ico
 function Navbar() {
     const [scrolled, setScrolled] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [mobileMenuOpen, setMobileMenuOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [activeSection, setActiveSection] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("home");
+    const isManualScroll = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(false);
+    const scrollTimeout = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRef"])(null);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const sectionIds = [
+            "home",
+            "about",
+            "skills",
+            "experience",
+            "projects",
+            "contact"
+        ];
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         const handleScroll = ()=>{
             setScrolled(window.scrollY > 50);
+            if (isManualScroll.current) return;
+            // If scrolled near bottom of the page, activate the contact section
+            const scrollPosition = window.scrollY + window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight;
+            if (scrollPosition >= documentHeight - 60) {
+                setActiveSection("contact");
+                return;
+            }
+            // If near the very top of page, activate home
+            if (window.scrollY < 80) {
+                setActiveSection("home");
+                return;
+            }
+            // Check sections from bottom to top to find the active section in view
+            const threshold = Math.min(260, window.innerHeight * 0.35);
+            for(let i = sectionIds.length - 1; i >= 0; i--){
+                const id = sectionIds[i];
+                const el = document.getElementById(id);
+                if (el) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= threshold) {
+                        setActiveSection(id);
+                        break;
+                    }
+                }
+            }
         };
-        window.addEventListener("scroll", handleScroll);
-        return ()=>window.removeEventListener("scroll", handleScroll);
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, {
+            passive: true
+        });
+        return ()=>{
+            window.removeEventListener("scroll", handleScroll);
+            if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        };
     }, []);
+    const handleNavClick = (id)=>{
+        setActiveSection(id);
+        setMobileMenuOpen(false);
+        isManualScroll.current = true;
+        if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
+        scrollTimeout.current = setTimeout(()=>{
+            isManualScroll.current = false;
+        }, 800);
+    };
     const navLinks = [
         {
             name: "Home",
-            href: "#home"
+            href: "#home",
+            id: "home"
         },
         {
             name: "About",
-            href: "#about"
+            href: "#about",
+            id: "about"
         },
         {
             name: "Skills",
-            href: "#skills"
+            href: "#skills",
+            id: "skills"
         },
         {
             name: "Experience",
-            href: "#experience"
+            href: "#experience",
+            id: "experience"
         },
         {
             name: "Projects",
-            href: "#projects"
+            href: "#projects",
+            id: "projects"
         },
         {
             name: "Contact",
-            href: "#contact"
+            href: "#contact",
+            id: "contact"
         }
     ];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -177,52 +237,69 @@ function Navbar() {
                             className: "blackhole-ring px-6 py-2.5 md:px-8 md:py-3 transition-all duration-300",
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                 href: "#home",
+                                onClick: ()=>handleNavClick("home"),
                                 className: "text-xl md:text-2xl font-bold text-star-white tracking-widest text-glow select-none",
                                 children: "Saurabh"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/Navbar.tsx",
-                                lineNumber: 40,
+                                lineNumber: 97,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/components/Navbar.tsx",
-                            lineNumber: 39,
+                            lineNumber: 96,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Navbar.tsx",
-                        lineNumber: 38,
+                        lineNumber: 95,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                        className: "hidden md:flex gap-8",
-                        children: navLinks.map((link)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                        className: "hidden md:flex gap-8 items-center",
+                        children: navLinks.map((link)=>{
+                            const isActive = activeSection === link.id;
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     href: link.href,
-                                    className: "relative text-text-primary text-lg font-medium transition-all duration-300 hover:text-star-white hover:text-glow group",
+                                    onClick: ()=>handleNavClick(link.id),
+                                    className: `relative py-1 text-lg font-medium transition-all duration-300 ${isActive ? "text-star-white text-glow font-semibold" : "text-text-primary/75 hover:text-star-white hover:text-glow group"}`,
                                     children: [
                                         link.name,
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                            className: "absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-cyan transition-all duration-300 group-hover:w-full shadow-[0_0_10px_var(--accent-cyan)]"
+                                        isActive ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["motion"].span, {
+                                            layoutId: "activeNavIndicator",
+                                            className: "absolute -bottom-1 left-0 right-0 h-[2px] bg-accent-cyan shadow-[0_0_12px_var(--accent-cyan)] rounded-full",
+                                            transition: {
+                                                type: "spring",
+                                                stiffness: 380,
+                                                damping: 30
+                                            }
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/Navbar.tsx",
-                                            lineNumber: 58,
-                                            columnNumber: 17
+                                            lineNumber: 124,
+                                            columnNumber: 21
+                                        }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "absolute -bottom-1 left-0 w-0 h-[2px] bg-accent-cyan/60 transition-all duration-300 group-hover:w-full shadow-[0_0_8px_var(--accent-cyan)]"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/Navbar.tsx",
+                                            lineNumber: 130,
+                                            columnNumber: 21
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/Navbar.tsx",
-                                    lineNumber: 53,
-                                    columnNumber: 15
+                                    lineNumber: 113,
+                                    columnNumber: 17
                                 }, this)
                             }, link.name, false, {
                                 fileName: "[project]/src/components/Navbar.tsx",
-                                lineNumber: 52,
-                                columnNumber: 13
-                            }, this))
+                                lineNumber: 112,
+                                columnNumber: 15
+                            }, this);
+                        })
                     }, void 0, false, {
                         fileName: "[project]/src/components/Navbar.tsx",
-                        lineNumber: 50,
+                        lineNumber: 108,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -230,22 +307,22 @@ function Navbar() {
                         onClick: ()=>setMobileMenuOpen(!mobileMenuOpen),
                         children: mobileMenuOpen ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FaTimes"], {}, void 0, false, {
                             fileName: "[project]/src/components/Navbar.tsx",
-                            lineNumber: 69,
+                            lineNumber: 143,
                             columnNumber: 29
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["FaBars"], {}, void 0, false, {
                             fileName: "[project]/src/components/Navbar.tsx",
-                            lineNumber: 69,
+                            lineNumber: 143,
                             columnNumber: 43
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/components/Navbar.tsx",
-                        lineNumber: 65,
+                        lineNumber: 139,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Navbar.tsx",
-                lineNumber: 36,
+                lineNumber: 93,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$components$2f$AnimatePresence$2f$index$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["AnimatePresence"], {
@@ -264,42 +341,46 @@ function Navbar() {
                     },
                     className: "md:hidden absolute top-full left-0 w-full bg-void-black/95 backdrop-blur-lg border-b border-white/10 shadow-xl",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                        className: "flex flex-col items-center py-6 gap-6",
-                        children: navLinks.map((link)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                        className: "flex flex-col items-center py-6 gap-3",
+                        children: navLinks.map((link)=>{
+                            const isActive = activeSection === link.id;
+                            return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
+                                className: "w-full text-center px-8",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     href: link.href,
-                                    onClick: ()=>setMobileMenuOpen(false),
-                                    className: "text-text-primary text-xl font-medium hover:text-accent-cyan transition-colors",
+                                    onClick: ()=>handleNavClick(link.id),
+                                    className: `block py-2.5 px-6 rounded-full text-lg font-medium transition-all duration-300 ${isActive ? "text-star-white text-glow bg-white/10 border border-accent-cyan/40 shadow-[0_0_15px_rgba(0,240,255,0.2)] font-semibold" : "text-text-primary/80 hover:text-star-white hover:bg-white/5"}`,
                                     children: link.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/Navbar.tsx",
-                                    lineNumber: 85,
-                                    columnNumber: 19
+                                    lineNumber: 161,
+                                    columnNumber: 21
                                 }, this)
                             }, link.name, false, {
                                 fileName: "[project]/src/components/Navbar.tsx",
-                                lineNumber: 84,
-                                columnNumber: 17
-                            }, this))
+                                lineNumber: 160,
+                                columnNumber: 19
+                            }, this);
+                        })
                     }, void 0, false, {
                         fileName: "[project]/src/components/Navbar.tsx",
-                        lineNumber: 82,
+                        lineNumber: 156,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/src/components/Navbar.tsx",
-                    lineNumber: 76,
+                    lineNumber: 150,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Navbar.tsx",
-                lineNumber: 74,
+                lineNumber: 148,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Navbar.tsx",
-        lineNumber: 29,
+        lineNumber: 86,
         columnNumber: 5
     }, this);
 }
@@ -808,9 +889,18 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Section
 ;
 const experiences = [
     {
+        role: "Assistant System Engineer",
+        company: "Tata Consultancy Services",
+        date: "Aug 2026 - Present",
+        details: [
+            "Working in Digital Procurement",
+            "Ivalua Platform"
+        ]
+    },
+    {
         role: "Software Developer",
         company: "Rayo Innovations",
-        date: "Nov 2025 - Present",
+        date: "Nov 2025 - May 2026",
         details: [
             "Worked on CMS and CRM systems",
             "Built client-side modules and implemented them",
@@ -864,7 +954,7 @@ function ExperienceSection() {
                 title: "Experience Timeline"
             }, void 0, false, {
                 fileName: "[project]/src/components/ExperienceSection.tsx",
-                lineNumber: 53,
+                lineNumber: 62,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -875,7 +965,7 @@ function ExperienceSection() {
                         className: "absolute top-0 -left-[2px] w-[2px] h-full bg-white/5 md:-left-px"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                        lineNumber: 57,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -885,7 +975,7 @@ function ExperienceSection() {
                         className: "absolute top-0 -left-[2px] w-[2px] bg-gradient-to-b from-accent-cyan via-nebula-purple to-transparent shadow-[0_0_15px_var(--accent-cyan)] md:-left-px origin-top"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                        lineNumber: 59,
+                        lineNumber: 68,
                         columnNumber: 9
                     }, this),
                     experiences.map((exp, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -918,12 +1008,12 @@ function ExperienceSection() {
                                         className: "absolute -inset-1 rounded-full border border-accent-cyan animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                                        lineNumber: 81,
+                                        lineNumber: 90,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 80,
+                                    lineNumber: 89,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -931,7 +1021,7 @@ function ExperienceSection() {
                                     children: exp.role
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 84,
+                                    lineNumber: 93,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -939,7 +1029,7 @@ function ExperienceSection() {
                                     children: exp.company
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 94,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -947,7 +1037,7 @@ function ExperienceSection() {
                                     children: exp.date
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 86,
+                                    lineNumber: 95,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -960,37 +1050,37 @@ function ExperienceSection() {
                                                     children: "▹"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                                    lineNumber: 92,
+                                                    lineNumber: 101,
                                                     columnNumber: 19
                                                 }, this),
                                                 detail
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/src/components/ExperienceSection.tsx",
-                                            lineNumber: 91,
+                                            lineNumber: 100,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 89,
+                                    lineNumber: 98,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/src/components/ExperienceSection.tsx",
-                            lineNumber: 65,
+                            lineNumber: 74,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ExperienceSection.tsx",
-                lineNumber: 55,
+                lineNumber: 64,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ExperienceSection.tsx",
-        lineNumber: 52,
+        lineNumber: 61,
         columnNumber: 5
     }, this);
 }
