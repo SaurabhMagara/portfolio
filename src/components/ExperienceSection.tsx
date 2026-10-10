@@ -10,8 +10,7 @@ const experiences = [
     company: "Tata Consultancy Services",
     date: "Aug 2026 - Present",
     details: [
-      "Working in Digital Procurement",
-      "Ivalua Platform"
+      "Working in Digital Procurement"
     ],
   },
   {

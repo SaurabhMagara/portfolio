@@ -967,8 +967,7 @@ const experiences = [
         company: "Tata Consultancy Services",
         date: "Aug 2026 - Present",
         details: [
-            "Working in Digital Procurement",
-            "Ivalua Platform"
+            "Working in Digital Procurement"
         ]
     },
     {
@@ -1029,7 +1028,7 @@ function ExperienceSection() {
                 title: "Experience Timeline"
             }, void 0, false, {
                 fileName: "[project]/src/components/ExperienceSection.tsx",
-                lineNumber: 62,
+                lineNumber: 61,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1040,7 +1039,7 @@ function ExperienceSection() {
                         className: "absolute top-0 -left-[2px] w-[2px] h-full bg-white/5 md:-left-px"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                        lineNumber: 66,
+                        lineNumber: 65,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1050,7 +1049,7 @@ function ExperienceSection() {
                         className: "absolute top-0 -left-[2px] w-[2px] bg-gradient-to-b from-accent-cyan via-nebula-purple to-transparent shadow-[0_0_15px_var(--accent-cyan)] md:-left-px origin-top"
                     }, void 0, false, {
                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                        lineNumber: 68,
+                        lineNumber: 67,
                         columnNumber: 9
                     }, this),
                     experiences.map((exp, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$framer$2d$motion$2f$dist$2f$es$2f$render$2f$components$2f$motion$2f$proxy$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["motion"].div, {
@@ -1083,12 +1082,12 @@ function ExperienceSection() {
                                         className: "absolute -inset-1 rounded-full border border-accent-cyan animate-[ping_2s_cubic-bezier(0,0,0.2,1)_infinite]"
                                     }, void 0, false, {
                                         fileName: "[project]/src/components/ExperienceSection.tsx",
-                                        lineNumber: 90,
+                                        lineNumber: 89,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 89,
+                                    lineNumber: 88,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1096,7 +1095,7 @@ function ExperienceSection() {
                                     children: exp.role
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 93,
+                                    lineNumber: 92,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h4", {
@@ -1104,7 +1103,7 @@ function ExperienceSection() {
                                     children: exp.company
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 94,
+                                    lineNumber: 93,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1112,7 +1111,7 @@ function ExperienceSection() {
                                     children: exp.date
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 95,
+                                    lineNumber: 94,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -1125,37 +1124,37 @@ function ExperienceSection() {
                                                     children: "▹"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                                    lineNumber: 101,
+                                                    lineNumber: 100,
                                                     columnNumber: 19
                                                 }, this),
                                                 detail
                                             ]
                                         }, i, true, {
                                             fileName: "[project]/src/components/ExperienceSection.tsx",
-                                            lineNumber: 100,
+                                            lineNumber: 99,
                                             columnNumber: 17
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ExperienceSection.tsx",
-                                    lineNumber: 98,
+                                    lineNumber: 97,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, index, true, {
                             fileName: "[project]/src/components/ExperienceSection.tsx",
-                            lineNumber: 74,
+                            lineNumber: 73,
                             columnNumber: 11
                         }, this))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ExperienceSection.tsx",
-                lineNumber: 64,
+                lineNumber: 63,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ExperienceSection.tsx",
-        lineNumber: 61,
+        lineNumber: 60,
         columnNumber: 5
     }, this);
 }
